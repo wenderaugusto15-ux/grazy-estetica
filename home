@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><script src="https://myhub.ia.br/canvas-vendor/tailwind.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grazy Estética - Conheça Nossos Serviços</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #ff3d7f;
+    --secondary: #ffb703;
+    --bg: #ffe8ef;
+    --text: #2b1030;
+    --surface: #ffffff;
+    --on-primary: #ffffff;
+    --on-secondary: #141414;
+    --radius: 28px;
+    --hf: "Bricolage Grotesque", sans-serif;
+    --bf: "Manrope", sans-serif;
+    --muted: color-mix(in srgb, var(--text) 64%, var(--bg));
+    --line: color-mix(in srgb, var(--text) 12%, transparent);
+    --wine: #2b1030;
+    --deep: #190a1d;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: var(--bf);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul, ol { list-style: none; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; background: none; border: 0; }
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+  section[id] { scroll-margin-top: 90px; }
+  [hidden] { display: none !important; }
+
+  h1, h2, h3, h4 {
+    font-family: var(--hf);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    overflow-wrap: break-word;
+  }
+
+  .wrap { width: min(1180px, 100% - 40px); margin-inline: auto; }
+
+  .rv { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--dl, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .rv { opacity: 1; transform: none; }
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+
+  .cl-head {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .cl-head-in { display: flex; align-items: center; gap: 20px; height: 76px; }
+  .cl-brand { display: flex; align-items: center; gap: 11px; font-family: var(--hf); font-weight: 700; font-size: 20px; }
+  .cl-brand img { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; }
+  .cl-brand span { white-space: nowrap; }
+  .cl-head nav { display: flex; gap: 26px; margin-left: auto; font-size: 15px; color: var(--muted); font-weight: 500; }
+  .cl-head nav a:hover { color: var(--primary); }
+  .cl-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    padding: 13px 24px; border-radius: calc(var(--radius) + 2px);
+    background: var(--primary); color: var(--on-primary);
+    font-weight: 600; font-size: 15px; transition: filter .2s, transform .2s;
+  }
+  .cl-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .cl-btn-sm { padding: 10px 18px; font-size: 14px; }
+
+  .cl-hero { padding: 60px 0 90px; }
+  .cl-hero-copy { display: grid; justify-items: center; text-align: center; }
+  .cl-cred { font-size: 15px; font-weight: 600; color: var(--primary); margin-bottom: 18px; }
+  .cl-hero h1 { font-size: clamp(2.8rem, 7vw, 5.2rem); max-width: 16ch; }
+  .cl-actions { display: flex; align-items: center; justify-content: center; gap: 26px; flex-wrap: wrap; margin-top: 30px; }
+  .cl-link { font-weight: 600; color: var(--primary); }
+  .cl-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .cl-pano { position: relative; margin-top: 56px; }
+  .cl-pano > img {
+    width: 100%; aspect-ratio: 21/9; object-fit: cover;
+    border-radius: calc(var(--radius) * 1.5);
+    animation: openUp 1.2s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes openUp { 0% { clip-path: inset(0 6% 0 6% round 24px); opacity: .4; } }
+  .cl-bar {
+    position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: -44px auto 0; width: calc(100% - 56px); max-width: 980px;
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: 0 24px 48px -28px rgba(0,0,0,.35); overflow: hidden;
+  }
+  .cl-bar div { padding: 20px 24px; }
+  .cl-bar div + div { border-left: 1px solid var(--line); }
+  .cl-bar dt { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); }
+  .cl-bar dt svg { color: var(--primary); }
+  .cl-bar dd { margin: 6px 0 0; font-weight: 600; font-size: 15px; }
+
+  @media (max-width: 880px) {
+    .cl-head nav { display: none; }
+    .cl-head-in { justify-content: space-between; }
+    .cl-pano > img { aspect-ratio: 4/3; }
+    .cl-bar { width: calc(100% - 24px); margin-top: -30px; grid-template-columns: 1fr; }
+    .cl-bar div + div { border-left: 0; border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 480px) {
+    .cl-brand { font-size: 17px; }
+    .cl-btn-sm { padding: 9px 13px; font-size: 12px; white-space: nowrap; }
+  }
+
+  .st-ticker {
+    overflow: hidden; background: var(--primary); color: var(--on-primary);
+    font-family: var(--hf); text-transform: uppercase; white-space: nowrap;
+    transform: rotate(-1.5deg) scale(1.03); margin: 10px 0 0;
+    border-block: 3px solid var(--text); position: relative; z-index: 2;
+  }
+  .st-ticker-track { display: flex; width: max-content; animation: marquee 80s linear infinite; }
+  .st-ticker span { display: inline-flex; align-items: center; gap: 26px; padding: 13px 26px 13px 0; font-size: clamp(1.4rem, 3.5vw, 2.4rem); font-weight: 700; letter-spacing: -.01em; }
+  .st-ticker i { width: 10px; height: 10px; background: var(--on-primary); transform: rotate(45deg); flex-shrink: 0; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .st-ticker-track { animation: none; } }
+
+  .bt-menu { padding: 80px 0 40px; }
+  .bt-menu-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 22px; }
+  .bt-menu-head h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+  .bt-menu-head p { color: var(--muted); margin-top: 6px; max-width: 40ch; }
+  .search { width: min(320px, 100%); position: relative; }
+  .search input {
+    width: 100%; padding: 13px 16px 13px 44px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); font-size: 15px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%23888' stroke-width='2'%3E%3Ccircle cx='8' cy='8' r='6'/%3E%3Cpath d='m13 13 4 4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 14px center;
+  }
+  .chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px; margin-bottom: 28px; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chips button {
+    white-space: nowrap; padding: 10px 18px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); font-size: 14px; font-weight: 600;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .chips button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+  .bt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .bt-card {
+    border-radius: var(--radius); background: var(--surface); overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: 0 1px 0 var(--line);
+    transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+  }
+  .bt-card:hover { transform: translateY(-6px); box-shadow: 0 24px 40px -24px rgba(0,0,0,.3); }
+  .bt-card-img { padding: 8px 8px 0; }
+  .bt-card-img img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: calc(var(--radius) - 6px); }
+  .bt-card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; flex: 1; }
+  .bt-card h3 { font-size: 18px; letter-spacing: -0.02em; }
+  .bt-card p { font-size: 13px; color: var(--muted); margin: 7px 0 14px; min-height: 2.6em; }
+  .bt-card-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .bt-price { font-weight: 800; font-size: 16px; padding: 6px 13px; border-radius: 999px; background: var(--bg); white-space: nowrap; }
+  .bt-wa {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 9px 15px; border-radius: 999px; background: var(--primary); color: var(--on-primary);
+    font-weight: 600; font-size: 14px; transition: filter .2s, transform .2s;
+  }
+  .bt-wa:hover { filter: brightness(1.08); transform: scale(1.03); }
+  .empty { text-align: center; padding: 40px 0; color: var(--muted); }
+  @media (max-width: 980px) { .bt-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px) { .bt-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .bt-card-body { padding: 12px; } }
+  @media (max-width: 480px) { .bt-grid { grid-template-columns: 1fr; } .bt-card h3 { font-size: 17px; } }
+
+  .bt-treinos { padding: 90px 0 60px; }
+  .bt-treinos-head { margin-bottom: 34px; }
+  .bt-treinos-head h2 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); }
+  .bt-treinos-head p { color: var(--muted); margin-top: 8px; max-width: 46ch; }
+  .treino-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .treino-card {
+    border-radius: var(--radius); background: var(--surface); overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: 0 1px 0 var(--line);
+    transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s;
+  }
+  .treino-card:hover { transform: translateY(-6px); box-shadow: 0 24px 40px -24px rgba(0,0,0,.3); }
+  .treino-card-img { padding: 8px 8px 0; }
+  .treino-card-img img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: calc(var(--radius) - 6px); }
+  .treino-card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
+  .treino-card h3 { font-size: 20px; }
+  .treino-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .treino-meta span { font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--bg); color: var(--text); }
+  .treino-desc { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+  .treino-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .treino-price { font-weight: 800; font-size: 17px; color: var(--primary); }
+  @media (max-width: 980px) { .treino-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .treino-grid { grid-template-columns: 1fr; } }
+
+  .sd-process { padding: 90px 0; background: var(--text); color: var(--bg); }
+  .sd-sec { margin-bottom: 26px; }
+  .sd-sec h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); }
+  .sd-process ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .sd-process li { padding-top: 24px; border-top: 1px solid color-mix(in srgb, var(--bg) 25%, transparent); display: grid; gap: 12px; }
+  .sd-process b { font-family: var(--hf); font-size: 3rem; line-height: 1; color: var(--secondary); }
+  .sd-process span { font-size: 20px; font-weight: 600; }
+  @media (max-width: 860px) { .sd-process ol { grid-template-columns: 1fr; } }
+
+  .bt-about {
+    position: relative; overflow: hidden; padding: 110px 0;
+    background: radial-gradient(ellipse at top, #18181b, #09090b 70%);
+    color: #fff; isolation: isolate;
+  }
+  .bt-about .meteors { position: absolute; inset: 0; opacity: .48; pointer-events: none; z-index: 0; overflow: hidden; }
+  .bt-about .meteors span {
+    position: absolute; top: 0; width: 1px; height: 1px; border-radius: 50%; background: #e4e4e7;
+    box-shadow: 0 0 6px 1px rgba(255,255,255,.35);
+  }
+  .bt-about .meteors span::after {
+    content: ""; position: absolute; top: 50%; left: 0; width: 90px; height: 1px;
+    background: linear-gradient(90deg, #d4d4d8, transparent); transform: translateY(-50%);
+  }
+  @keyframes meteorFall {
+    0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+    70% { opacity: 1; }
+    100% { transform: rotate(215deg) translateX(-820px); opacity: 0; }
+  }
+  .bt-about .wrap { position: relative; z-index: 1; }
+  .bt-about-head { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+  .bt-tag {
+    display: inline-block; padding: 7px 15px; border-radius: 999px;
+    background: rgba(255,255,255,.14); color: #ffd166; font-weight: 700; font-size: 13px;
+  }
+  .bt-about-copy h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: #fff; margin: 18px 0 16px; }
+  .bt-about-copy p { font-size: 18px; color: rgba(255,255,255,.82); max-width: 52ch; }
+  .bt-about-pic { border-radius: calc(var(--radius) * 1.5); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); background: #000; }
+  .bt-about-pic img { width: 100%; height: auto; object-fit: contain; display: block; }
+  @media (max-width: 880px) { .bt-about-head { grid-template-columns: 1fr; } .bt-about-pic { order: -1; } }
+
+  .lac-contact { padding: 80px 0 120px; }
+  .lac-head-c { max-width: 760px; margin: 0 auto 36px; text-align: center; }
+  .lac-head-c h2 { font-size: clamp(2.2rem, 5vw, 4rem); }
+  .lac-kicker {
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--primary); font-weight: 600;
+  }
+  .lac-kicker::before { content: ""; width: 6px; height: 6px; transform: rotate(45deg); background: currentColor; }
+  .lac-faq-in { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); gap: 48px; align-items: start; margin-bottom: 90px; }
+  .lac-faq-q { border-top: 1px solid var(--line); }
+  .lac-faq-q li { border-bottom: 1px solid var(--line); }
+  .lac-faq-q button {
+    position: relative; display: grid; grid-template-columns: 44px 1fr; align-items: baseline;
+    width: 100%; padding: 20px 4px; border: 0; background: none; color: var(--muted);
+    font: 400 clamp(1.2rem, 1.8vw, 1.45rem)/1.3 var(--hf); text-align: left; transition: color .3s, padding .3s;
+  }
+  .lac-faq-q button b { font: 600 12px var(--bf); letter-spacing: .14em; color: var(--muted); }
+  .lac-faq-q button:hover { color: var(--text); }
+  .lac-faq-q button[aria-selected="true"] { color: var(--primary); padding-left: 14px; }
+  .lac-faq-q button[aria-selected="true"] b { color: var(--primary); }
+  .lac-faq-q button::before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 2px; background: var(--primary); transform: scaleY(0); transition: transform .35s; }
+  .lac-faq-q button[aria-selected="true"]::before { transform: none; }
+  .lac-faq-a { position: sticky; top: 40px; min-height: 100%; }
+  .lac-faq-a > div {
+    padding: clamp(24px,3.4vw,48px); border-radius: calc(var(--radius) + 10px);
+    background: var(--surface); border: 1px solid var(--line);
+    opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .lac-faq-a > div.in { opacity: 1; transform: none; }
+  .lac-faq-a small { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--primary); font-weight: 600; }
+  .lac-faq-a h3 { margin: 12px 0 16px; font-size: clamp(1.6rem, 2.6vw, 2.2rem); color: var(--text); }
+  .lac-faq-a p { margin: 0; font-size: clamp(1.05rem, 1.7vw, 1.25rem); line-height: 1.6; color: var(--text); }
+
+  .lac-ticket {
+    display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr);
+    border-radius: 20px; overflow: hidden; background: var(--surface);
+    box-shadow: 0 50px 90px -60px rgba(43,16,48,.7);
+  }
+  .lac-stub {
+    position: relative; padding: clamp(24px,3.4vw,48px); background: var(--wine); color: var(--bg);
+  }
+  .lac-stub::before, .lac-stub::after {
+    content: ""; position: absolute; right: -17px; width: 34px; height: 34px; border-radius: 50%; background: var(--bg);
+  }
+  .lac-stub::before { top: -17px; }
+  .lac-stub::after { bottom: -17px; }
+  .lac-stub h2 { margin: 0 0 24px; font-size: clamp(2rem, 4vw, 3.4rem); color: #fff; }
+  .lac-stub .lac-kicker { color: var(--secondary); }
+  .lac-addr { display: flex; gap: 12px; margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.85); }
+  .lac-addr svg { flex: none; margin-top: 3px; color: var(--secondary); }
+  .lac-addr span { display: grid; gap: 4px; }
+  .lac-addr a { color: var(--secondary); font-weight: 500; font-size: 14px; }
+  .lac-hours { display: grid; margin: 10px 0 26px; border-top: 1px solid rgba(255,255,255,.2); }
+  .lac-hours div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.2); font-size: 14px; }
+  .lac-hours dt { color: rgba(255,255,255,.7); }
+  .lac-ghost {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 24px;
+    border-radius: 999px; border: 1px solid rgba(255,255,255,.5); color: #fff; font-weight: 500; font-size: 15px;
+    transition: background .3s, border-color .3s;
+  }
+  .lac-ghost:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+  .lac-form { display: grid; gap: 16px; align-content: center; padding: clamp(24px,3.4vw,48px); }
+  .lac-form label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .lac-form input, .lac-form select {
+    width: 100%; min-height: 50px; padding: 0 15px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--text); font: 400 15px var(--bf);
+  }
+  .lac-form input:focus, .lac-form select:focus { outline: 2px solid color-mix(in srgb, var(--primary) 60%, transparent); outline-offset: 1px; }
+  .lac-form .lac-btn { margin-top: 6px; }
+  .lac-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px;
+    padding: 0 26px; border-radius: 999px; background: var(--primary); color: var(--on-primary);
+    font-weight: 600; font-size: 15px; transition: transform .2s, box-shadow .2s, filter .2s;
+  }
+  .lac-btn:hover { transform: translateY(-1px); filter: brightness(1.08); box-shadow: 0 18px 34px -18px rgba(255,61,127,.7); }
+
+  @media (max-width: 900px) {
+    .lac-faq-in { grid-template-columns: 1fr; }
+    .lac-faq-a { position: static; }
+    .lac-ticket { grid-template-columns: 1fr; }
+    .lac-stub::before, .lac-stub::after { top: auto; bottom: -17px; }
+    .lac-stub::before { left: -17px; right: auto; }
+  }
+
+  footer { background: var(--wine); color: rgba(255,255,255,.72); padding: 26px 0 30px; font-size: 14px; }
+  .lac-foot-row { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+  .lac-foot-row span { flex: 1; min-width: 200px; }
+  .lac-up { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-weight: 500; }
+  .lac-up:hover { color: var(--secondary); }
+</style>
+</head>
+<body>
+
+<header class="cl-head">
+  <div class="wrap cl-head-in">
+    <a href="#home" class="cl-brand">
+      <img src="https://rblmnlycyjzoxdmhejxd.supabase.co/storage/v1/object/public/product-images/b44fe304-a17d-41be-8481-d2e168defb77/mvp/1794422377284-o0aky0.webp" alt="Logo Grazy Estética">
+      <span>Grazy Estética</span>
+    </a>
+    <nav aria-label="Seções">
+      <a href="#catalog">Tratamentos</a>
+      <a href="#treinos">Treinamentos</a>
+      <a href="#about">Sobre</a>
+      <a href="#contact">Contato</a>
+    </nav>
+    <a class="cl-btn cl-btn-sm" href="#agendar">Agendar horário!</a>
+  </div>
+</header>
+
+<section id="home" class="cl-hero">
+  <div class="wrap cl-hero-copy">
+    <p class="cl-cred">Conheça Nossos Serviços</p>
+    <h1>Um jeito feliz de fazer o seu dia.</h1>
+    <p class="cl-sub" style="color:var(--muted);max-width:52ch;margin-top:20px;"></p>
+    <div class="cl-actions">
+      <a class="cl-btn" href="#agendar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>
+        Agendar horário!
+      </a>
+      <a class="cl-link" href="#catalog">Ver tratamentos</a>
+    </div>
+  </div>
+  <div class="wrap cl-pano">
+    <img src="https://rblmnlycyjzoxdmhejxd.supabase.co/storage/v1/object/public/product-images/b44fe304-a17d-41be-8481-d2e168defb77/mvp/1794423834194-4tmll9.webp" alt="Grazy Estética" loading="eager">
+    <dl class="cl-bar">
+      <div>
+        <dt>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Atendimento
+        </dt>
+        <dd>09:00 as 18:00</dd>
+      </div>
+      <div>
+        <dt>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Endereço
+        </dt>
+        <dd>Patrocinio</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<div class="st-ticker" aria-hidden="true">
+  <div class="st-ticker-track">
+    <div class="st-ticker-run" id="tickerRun"></div>
+    <div class="st-ticker-run" id="tickerRun2"></div>
+  </div>
+</div>
+
+<section id="catalog" class="bt-menu">
+  <div class="wrap">
+    <div class="bt-menu-head rv">
+      <div>
+        <h2>Tratamentos</h2>
+        <p>Escolha o que precisa e combine pelo WhatsApp.</p>
+      </div>
+      <label class="search">
+        <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">Buscar serviço</span>
+        <input type="search" id="searchInput" placeholder="Buscar serviço">
+      </label>
+    </div>
+    <div class="chips rv" role="group" aria-label="Categorias">
+      <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+      <button type="button" data-filter="facial" aria-pressed="false">Facial</button>
+      <button type="button" data-filter="corporal" aria-pressed="false">Corporal</button>
+      <button type="button" data-filter="olhar" aria-pressed="false">Olhar</button>
+      <button type="button" data-filter="unhas" aria-pressed="false">Unhas</button>
+      <button type="button" data-filter="cabelo" aria-pressed="false">Cabelo</button>
+    </div>
+    <div class="bt-grid" id="gridServicos"></div>
+    <p class="empty" id="emptyMsg" hidden>Nenhum item encontrado. Tente outra busca.</p>
+  </div>
+</section>
+
+<section id="treinos" class="bt-treinos">
+  <div class="wrap">
+    <div class="bt-treinos-head rv">
+      <h2>Treinamentos</h2>
+      <p>Aprenda com quem atende. Cursos práticos para quem quer trabalhar com estética.</p>
+    </div>
+    <div class="treino-grid" id="gridTreinos"></div>
+  </div>
+</section>
+
+<section class="sd-process">
+  <div class="wrap">
+    <div class="sd-sec">
+      <h2>Como funciona</h2>
+    </div>
+    <ol>
+      <li class="rv"><b>01</b><span>Você conta o que precisa</span></li>
+      <li class="rv" style="--dl:.12s"><b>02</b><span>Preparamos a melhor proposta</span></li>
+      <li class="rv" style="--dl:.24s"><b>03</b><span>Tudo combinado pelo WhatsApp</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="about" class="bt-about">
+  <div class="meteors" id="meteors" aria-hidden="true"></div>
+  <div class="wrap bt-about-head">
+    <div class="bt-about-copy rv">
+      <span class="bt-tag">Sobre</span>
+      <h2>Conheça Grazy Estética</h2>
+      <p>A Grazy Estética é um espaço dedicado a realçar a sua beleza e o seu bem-estar em Patrocínio (MG). Com atendimento personalizado e produtos de alta qualidade, oferecemos tratamentos estéticos faciais, corporais, cuidados com as unhas, cabelo e cursos de capacitação profissional. Aqui, cada detalhe é pensado para que você se sinta acolhida, cuidada e confiante — do momento em que chega ao resultado que leva para a vida.</p>
+    </div>
+    <div class="bt-about-pic rv" style="--dl:.12s">
+      <img src="https://i.ibb.co/5xSQbz6f/Captura-de-tela-2026-11-11-191056.png" alt="Grazy Estética" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="lac-contact">
+  <div class="wrap">
+    <header class="lac-head-c rv">
+      <p class="lac-kicker">Antes de vir</p>
+      <h2>Perguntas que todo mundo faz</h2>
+    </header>
+
+    <div class="lac-faq-in">
+      <ol class="lac-faq-q" role="tablist" aria-label="Perguntas">
+        <li class="rv" style="--j:0"><button type="button" role="tab" id="faq-q-0" aria-controls="faq-a-0" aria-selected="true" tabindex="0" data-faq="0"><b>01</b><span>A limpeza de pele agride a pele?</span></button></li>
+        <li class="rv" style="--j:1"><button type="button" role="tab" id="faq-q-1" aria-controls="faq-a-1" aria-selected="false" tabindex="-1" data-faq="1"><b>02</b><span>Quanto tempo dura o resultado?</span></button></li>
+        <li class="rv" style="--j:2"><button type="button" role="tab" id="faq-q-2" aria-controls="faq-a-2" aria-selected="false" tabindex="-1" data-faq="2"><b>03</b><span>Os produtos são esterilizados?</span></button></li>
+        <li class="rv" style="--j:3"><button type="button" role="tab" id="faq-q-3" aria-controls="faq-a-3" aria-selected="false" tabindex="-1" data-faq="3"><b>04</b><span>Vocês atendem noiva?</span></button></li>
+        <li class="rv" style="--j:4"><button type="button" role="tab" id="faq-q-4" aria-controls="faq-a-4" aria-selected="false" tabindex="-1" data-faq="4"><b>05</b><span>Tenho alergia. Posso fazer os tratamentos?</span></button></li>
+        <li class="rv" style="--j:5"><button type="button" role="tab" id="faq-q-5" aria-controls="faq-a-5" aria-selected="false" tabindex="-1" data-faq="5"><b>06</b><span>Posso remarcar?</span></button></li>
+      </ol>
+      <div class="lac-faq-a rv" style="--j:2">
+        <div id="faq-a-0" role="tabpanel" aria-labelledby="faq-q-0" class="in">
+          <small>Pergunta 01</small>
+          <h3>A limpeza de pele agride a pele?</h3>
+          <p>Não. A extração é feita com cuidado e os produtos usados são suaves. Depois da limpeza, a pele pode ficar levemente avermelhada por algumas horas, mas recupera rápido.</p>
+        </div>
+        <div id="faq-a-1" role="tabpanel" aria-labelledby="faq-q-1" hidden>
+          <small>Pergunta 02</small>
+          <h3>Quanto tempo dura o resultado?</h3>
+          <p>Depende do tratamento. A limpeza de pele dura em média 30 dias. Peeling e hidratação pedem manutenção mensal para manter a pele renovada.</p>
+        </div>
+        <div id="faq-a-2" role="tabpanel" aria-labelledby="faq-q-2" hidden>
+          <small>Pergunta 03</small>
+          <h3>Os produtos são esterilizados?</h3>
+          <p>Sim. Todos os instrumentos passam por limpeza e esterilização. Itens descartáveis são abertos na sua frente.</p>
+        </div>
+        <div id="faq-a-3" role="tabpanel" aria-labelledby="faq-q-3" hidden>
+          <small>Pergunta 04</small>
+          <h3>Vocês atendem noiva?</h3>
+          <p>Atendemos. O dia da noiva inclui limpeza de pele, hidratação e massagem relaxante. Agende com antecedência.</p>
+        </div>
+        <div id="faq-a-4" role="tabpanel" aria-labelledby="faq-q-4" hidden>
+          <small>Pergunta 05</small>
+          <h3>Tenho alergia. Posso fazer os tratamentos?</h3>
+          <p>Sim. Usamos produtos hipoalergênicos. Conte na hora de agendar para separarmos a linha certa para a sua pele.</p>
+        </div>
+        <div id="faq-a-5" role="tabpanel" aria-labelledby="faq-q-5" hidden>
+          <small>Pergunta 06</small>
+          <h3>Posso remarcar?</h3>
+          <p>Pode remarcar sem custo até 24 horas antes. Atrasos de mais de 15 minutos podem pedir um novo horário.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="agendar" class="lac-ticket rv">
+      <div class="lac-stub">
+        <p class="lac-kicker">Cartão de horário</p>
+        <h2>Marque o seu horário</h2>
+        <p class="lac-addr">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span>Patrocinio<a href="https://www.google.com/maps/search/?api=1&query=Patrocinio" target="_blank" rel="noopener noreferrer">Como chegar</a></span>
+        </p>
+        <p class="lac-addr">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>
+          <span>Atendimento com hora marcada</span>
+        </p>
+        <dl class="lac-hours">
+          <div><dt>09:00 as 18:00</dt><dd></dd></div>
+        </dl>
+        <a class="lac-ghost" href="https://wa.me/5534997062355" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+          Prefiro conversar no WhatsApp
+        </a>
+      </div>
+
+      <form class="lac-form" id="waForm" data-wa-form="5534997062355" data-wa-title="Olá! Quero agendar um horário na Grazy Estética.">
+        <label>
+          <span>Seu nome</span>
+          <input type="text" name="nome" aria-label="Nome" autocomplete="name" required>
+        </label>
+        <label>
+          <span>Categoria</span>
+          <select name="categoria" id="selectCategoria" aria-label="Categoria">
+            <option value="">Selecione uma categoria</option>
+            <option value="tratamentos">Tratamentos</option>
+            <option value="treinamentos">Treinamentos</option>
+          </select>
+        </label>
+        <label>
+          <span>Serviço</span>
+          <select name="servico" id="selectServico" aria-label="Serviço">
+            <option value="">Selecione primeiro a categoria</option>
+          </select>
+        </label>
+        <label>
+          <span>Melhor período</span>
+          <select name="periodo" aria-label="Período">
+            <option>Manhã</option>
+            <option>Tarde</option>
+            <option>Fim do dia</option>
+            <option>Sábado</option>
+          </select>
+        </label>
+        <button type="submit" class="lac-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+          Pedir pelo WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap lac-foot-row">
+    <span>Grazy Estética em Patrocinio</span>
+    <a class="lac-up" href="#home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+      Topo
+    </a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const servicos = [
+    { id: "d1", nome: "Depilação corporal feminina", desc: "Depilação com cera quente, suave e eficaz para diferentes áreas do corpo.", preco: 185, cat: "Corporal", foto: "https://i.ibb.co/VcG5dWg0/Captura-de-tela-2026-11-11-184059.png" },
+    { id: "h1", nome: "Hidratação premium", desc: "Hidratação intensa para pele desidratada, com ativos de alto desempenho.", preco: 65.9, cat: "Facial", foto: "https://i.ibb.co/F4Kx2fW4/Captura-de-tela-2026-11-11-184108.png" },
+    { id: "v1", nome: "Ventosa terapia", desc: "Técnica que melhora a circulação, alivia tensões e modela o corpo.", preco: 120, cat: "Corporal", foto: "https://i.ibb.co/GQZcjVBk/Captura-de-tela-2026-11-11-184042.png" },
+    { id: "m1", nome: "Massagem Feminina Drenagem e Modeladora", desc: "Combina drenagem linfática e manobras modeladoras para corpo.", preco: 75, cat: "Corporal", foto: "https://i.ibb.co/TDp12ctJ/Captura-de-tela-2026-11-11-183745.png" },
+    { id: "m2", nome: "Massagem Relaxante Masculina", desc: "Relaxamento profundo com técnicas adaptadas para o homem.", preco: 95, cat: "Corporal", foto: "https://i.ibb.co/C3JbDH2x/Captura-de-tela-2026-11-11-183733.png" },
+    { id: "e1", nome: "Esmaltação em gel Manicure e pedicure", desc: "Manicure e pedicure com esmaltação em gel de longa duração.", preco: 90, cat: "Unhas", foto: "https://i.ibb.co/3YsDsh5z/Captura-de-tela-2026-11-11-183723.png" },
+    { id: "l1", nome: "Spa dos lábios", desc: "Hidratação e renovação dos lábios com massagem e esfoliação.", preco: 55, cat: "Facial", foto: "https://i.ibb.co/hJXjc1Y0/Captura-de-tela-2026-11-11-190032.png" },
+    { id: "k1", nome: "Cronograma capilar", desc: "Reconstrução, hidratação e nutrição para cabelos saudáveis.", preco: 250, cat: "Cabelo", foto: "https://i.ibb.co/rG6H9Htk/Captura-de-tela-2026-11-11-183659.png" },
+    { id: "s1", nome: "Salão completo", desc: "Serviços completos de beleza em um só atendimento.", preco: 75, cat: "Cabelo", foto: "https://i.ibb.co/KjcF4jq2/Captura-de-tela-2026-11-11-183647.png" },
+    { id: "b1", nome: "Bronzeamento Artificial e Natural", desc: "Bronzeamento perfeito e uniforme, artificial ou natural.", preco: 125, cat: "Corporal", foto: "https://i.ibb.co/Vc6SvqYC/Captura-de-tela-2026-11-11-183631.png" },
+    { id: "p1", nome: "Spa dos pés", desc: "Cuidado completo para os pés: higienização, hidratação e massagem.", preco: 500, cat: "Corporal", foto: "https://i.ibb.co/Xk4NkNQ9/Captura-de-tela-2026-11-11-181120.png" },
+    { id: "o1", nome: "Design de sobrancelhas e Epilação de buço", desc: "Design de sobrancelhas e epilação de buço com acabamento perfeito.", preco: 480, cat: "Olhar", foto: "https://i.ibb.co/Cp71dPBX/Captura-de-tela-2026-11-11-183604.png" }
+  ];
+
+  const treinos = [
+    { nome: "Curso esmaltação em gel", carga: "16 horas", duracao: "2 dias", preco: "R$ 500,00", desc: "Aprenda a técnica completa de esmaltação em gel, do preparo ao acabamento.", foto: "https://i.ibb.co/FbSWPzph/Captura-de-tela-2026-11-11-184050.png" },
+    { nome: "Curso Soft gel e esmaltação em gel", carga: "24 horas", duracao: "3 dias", preco: "R$ 800,00", desc: "Especialize-se em soft gel e esmaltação em gel com prática em modelo real.", foto: "https://i.ibb.co/7xcF2LsQ/Captura-de-tela-2026-11-11-183538.png" },
+    { nome: "Curso de manicure e pedicure", carga: "20 horas", duracao: "2 dias", preco: "R$ 750,00", desc: "Curso completo de manicure e pedicure, com todas as técnicas essenciais.", foto: "https://i.ibb.co/jkMMg6cx/Captura-de-tela-2026-11-11-183519.png" },
+    { nome: "Cabeleireiro completo incluindo química", carga: "", duracao: "", preco: "R$ 1.250,00", desc: "Curso completo de cabeleireiro incluindo procedimentos com química.", foto: "https://i.ibb.co/YTYCHv6Z/Captura-de-tela-2026-11-11-183551.png" }
+  ];
+
+  const grid = document.getElementById("gridServicos");
+  const empty = document.getElementById("emptyMsg");
+  const search = document.getElementById("searchInput");
+  const chips = document.querySelectorAll(".chips button");
+  let currentFilter = "all";
+
+  function normalize(s) {
+    return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
+  function formatPrice(p) {
+    return p > 0 ? "R$ " + p.toFixed(2).replace(".", ",") : "Sob consulta";
+  }
+
+  function renderServicos() {
+    const term = normalize(search.value.trim());
+    grid.innerHTML = "";
+    let count = 0;
+    servicos.forEach((s, i) => {
+      const catOk = currentFilter === "all" || normalize(s.cat) === currentFilter;
+      const textOk = normalize(s.nome + " " + s.desc).includes(term);
+      const show = catOk && textOk;
+      if (show) count++;
+      const card = document.createElement("article");
+      card.className = "bt-card rv";
+      card.style.setProperty("--dl", (i * 0.06).toFixed(2) + "s");
+      card.hidden = !show;
+      card.dataset.cat = normalize(s.cat);
+      const waText = "Olá! Tenho interesse em " + s.nome + ".";
+      card.innerHTML = `
+        <div class="bt-card-img"><img src="${s.foto}" alt="${s.nome}" loading="lazy"></div>
+        <div class="bt-card-body">
+          <h3>${s.nome}</h3>
+          <p>${s.desc}</p>
+          <div class="bt-card-foot">
+            <span class="bt-price">${formatPrice(s.preco)}</span>
+            <a class="bt-wa" href="https://wa.me/5534997062355?text=${encodeURIComponent(waText)}" target="_blank" rel="noopener noreferrer" aria-label="Agendar ${s.nome} pelo WhatsApp">
+              Agendar
+            </a>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+    empty.hidden = count > 0;
+    observeReveals();
+  }
+
+  chips.forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentFilter = btn.dataset.filter;
+      chips.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+      renderServicos();
+    });
+  });
+
+  search.addEventListener("input", renderServicos);
+
+  const gridTreinos = document.getElementById("gridTreinos");
+  treinos.forEach((t, i) => {
+    const waText = "Olá! Tenho interesse no curso " + t.nome + ".";
+    const card = document.createElement("article");
+    card.className = "treino-card rv";
+    card.style.setProperty("--dl", (i * 0.06).toFixed(2) + "s");
+    card.innerHTML = `
+      <div class="treino-card-img"><img src="${t.foto}" alt="${t.nome}" loading="lazy"></div>
+      <div class="treino-card-body">
+        <h3>${t.nome}</h3>
+        <div class="treino-meta"><span>${t.carga}</span><span>${t.duracao}</span></div>
+        <p class="treino-desc">${t.desc}</p>
+        <div class="treino-foot">
+          <span class="treino-price">${t.preco}</span>
+          <a class="bt-wa" href="https://wa.me/5534997062355?text=${encodeURIComponent(waText)}" target="_blank" rel="noopener noreferrer" aria-label="Agendar ${t.nome} pelo WhatsApp">
+            Agendar
+          </a>
+        </div>
+      </div>`;
+    gridTreinos.appendChild(card);
+  });
+
+  const tickerNames = servicos.map(s => s.nome);
+  function buildTickerRun() {
+    const run = document.createElement("div");
+    run.className = "st-ticker-run";
+    const items = [...tickerNames, ...tickerNames];
+    items.forEach(name => {
+      const span = document.createElement("span");
+      span.innerHTML = name + "<i></i>";
+      run.appendChild(span);
+    });
+    return run;
+  }
+  const tickerTrack = document.querySelector(".st-ticker-track");
+  tickerTrack.innerHTML = "";
+  tickerTrack.appendChild(buildTickerRun());
+  tickerTrack.appendChild(buildTickerRun());
+
+  const reveals = new Set();
+  const observer = ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    ? new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            observer.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -8% 0px" })
+    : null;
+
+  function observeReveals() {
+    document.querySelectorAll(".rv:not(.in)").forEach(el => {
+      if (observer) observer.observe(el);
+      else el.classList.add("in");
+    });
+  }
+  observeReveals();
+
+  const faqBtns = document.querySelectorAll("[data-faq]");
+  const faqPanels = document.querySelectorAll('[role="tabpanel"]');
+  function setFaq(idx, focus = false) {
+    faqBtns.forEach((b, i) => {
+      b.setAttribute("aria-selected", String(i === idx));
+      b.tabIndex = i === idx ? 0 : -1;
+    });
+    faqPanels.forEach((p, i) => {
+      p.hidden = i !== idx;
+      p.classList.toggle("in", i === idx);
+    });
+    if (focus) faqBtns[idx].focus();
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      faqPanels[idx].scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+  faqBtns.forEach((btn, i) => {
+    btn.addEventListener("click", () => setFaq(i));
+    btn.addEventListener("keydown", e => {
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); setFaq((i + 1) % faqBtns.length, true); }
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); setFaq((i - 1 + faqBtns.length) % faqBtns.length, true); }
+    });
+  });
+
+  const itensPorCategoria = {
+    tratamentos: [
+      "Depilação corporal feminina",
+      "Hidratação premium",
+      "Ventosa terapia",
+      "Massagem Feminina Drenagem e Modeladora",
+      "Massagem Relaxante Masculina",
+      "Esmaltação em gel Manicure e pedicure",
+      "Spa dos lábios",
+      "Cronograma capilar",
+      "Salão completo",
+      "Bronzeamento Artificial e Natural",
+      "Spa dos pés",
+      "Design de sobrancelhas e Epilação de buço"
+    ],
+    treinamentos: [
+      "Curso esmaltação em gel",
+      "Curso Soft gel e esmaltação em gel",
+      "Curso de manicure e pedicure",
+      "Cabeleireiro completo incluindo química"
+    ]
+  };
+
+  const selectCategoria = document.getElementById("selectCategoria");
+  const selectServico = document.getElementById("selectServico");
+
+  selectCategoria.addEventListener("change", () => {
+    const cat = selectCategoria.value;
+    selectServico.innerHTML = "";
+    if (!cat) {
+      selectServico.innerHTML = '<option value="">Selecione primeiro a categoria</option>';
+      return;
+    }
+    const opcaoPadrao = document.createElement("option");
+    opcaoPadrao.value = "";
+    opcaoPadrao.textContent = "Selecione um serviço";
+    selectServico.appendChild(opcaoPadrao);
+    itensPorCategoria[cat].forEach(item => {
+      const opt = document.createElement("option");
+      opt.value = item;
+      opt.textContent = item;
+      selectServico.appendChild(opt);
+    });
+  });
+
+  const form = document.getElementById("waForm");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const msg = [
+      form.dataset.waTitle,
+      "Nome: " + (fd.get("nome") || ""),
+      "Serviço: " + (fd.get("servico") || ""),
+      "Melhor período: " + (fd.get("periodo") || "")
+    ];
+    window.open("https://wa.me/" + form.dataset.waForm + "?text=" + encodeURIComponent(msg.join("\n")), "_blank", "noopener");
+  });
+
+  const meteors = document.getElementById("meteors");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    meteors.style.display = "none";
+  } else {
+    for (let i = 0; i < 22; i++) {
+      const m = document.createElement("span");
+      m.style.left = (Math.random() * 110 - 10) + "%";
+      m.style.animation = "meteorFall " + (2.5 + Math.random() * 4).toFixed(2) + "s linear " + (Math.random() * 6).toFixed(2) + "s infinite";
+      meteors.appendChild(m);
+    }
+  }
+
+  renderServicos();
+})();
+</script>
+
+</body>
+</html>
