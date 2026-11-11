@@ -127,7 +127,7 @@
     transform: rotate(-1.5deg) scale(1.03); margin: 10px 0 0;
     border-block: 3px solid var(--text); position: relative; z-index: 2;
   }
-  .st-ticker-track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+  .st-ticker-track { display: flex; width: max-content; animation: marquee 80s linear infinite; }
   .st-ticker span { display: inline-flex; align-items: center; gap: 26px; padding: 13px 26px 13px 0; font-size: clamp(1.4rem, 3.5vw, 2.4rem); font-weight: 700; letter-spacing: -.01em; }
   .st-ticker i { width: 10px; height: 10px; background: var(--on-primary); transform: rotate(45deg); flex-shrink: 0; }
   @keyframes marquee { to { transform: translateX(-50%); } }
@@ -236,8 +236,8 @@
   }
   .bt-about-copy h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: #fff; margin: 18px 0 16px; }
   .bt-about-copy p { font-size: 18px; color: rgba(255,255,255,.82); max-width: 52ch; }
-  .bt-about-pic { border-radius: calc(var(--radius) * 1.5); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
-  .bt-about-pic img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .bt-about-pic { border-radius: calc(var(--radius) * 1.5); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); background: #000; }
+  .bt-about-pic img { width: 100%; height: auto; object-fit: contain; display: block; }
   @media (max-width: 880px) { .bt-about-head { grid-template-columns: 1fr; } .bt-about-pic { order: -1; } }
 
   .lac-contact { padding: 80px 0 120px; }
@@ -345,7 +345,7 @@
       <a href="#about">Sobre</a>
       <a href="#contact">Contato</a>
     </nav>
-    <a class="cl-btn cl-btn-sm" href="https://wa.me/5534997062355" target="_blank" rel="noopener noreferrer">Agendar horário!</a>
+    <a class="cl-btn cl-btn-sm" href="#agendar">Agendar horário!</a>
   </div>
 </header>
 
@@ -355,7 +355,7 @@
     <h1>Um jeito feliz de fazer o seu dia.</h1>
     <p class="cl-sub" style="color:var(--muted);max-width:52ch;margin-top:20px;"></p>
     <div class="cl-actions">
-      <a class="cl-btn" href="https://wa.me/5534997062355" target="_blank" rel="noopener noreferrer">
+      <a class="cl-btn" href="#agendar">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg>
         Agendar horário!
       </a>
@@ -407,8 +407,8 @@
       <button type="button" data-filter="facial" aria-pressed="false">Facial</button>
       <button type="button" data-filter="corporal" aria-pressed="false">Corporal</button>
       <button type="button" data-filter="olhar" aria-pressed="false">Olhar</button>
-      <button type="button" data-filter="avaliacao" aria-pressed="false">Avaliação</button>
-      <button type="button" data-filter="novidades" aria-pressed="false">Novidades</button>
+      <button type="button" data-filter="unhas" aria-pressed="false">Unhas</button>
+      <button type="button" data-filter="cabelo" aria-pressed="false">Cabelo</button>
     </div>
     <div class="bt-grid" id="gridServicos"></div>
     <p class="empty" id="emptyMsg" hidden>Nenhum item encontrado. Tente outra busca.</p>
@@ -444,10 +444,10 @@
     <div class="bt-about-copy rv">
       <span class="bt-tag">Sobre</span>
       <h2>Conheça Grazy Estética</h2>
-      <p>Grazy Estética é uma estética em Patrocinio para quem valoriza cuidado de qualidade e atendimento de perto.</p>
+      <p>A Grazy Estética é um espaço dedicado a realçar a sua beleza e o seu bem-estar em Patrocínio (MG). Com atendimento personalizado e produtos de alta qualidade, oferecemos tratamentos estéticos faciais, corporais, cuidados com as unhas, cabelo e cursos de capacitação profissional. Aqui, cada detalhe é pensado para que você se sinta acolhida, cuidada e confiante — do momento em que chega ao resultado que leva para a vida.</p>
     </div>
     <div class="bt-about-pic rv" style="--dl:.12s">
-      <img src="https://rblmnlycyjzoxdmhejxd.supabase.co/storage/v1/object/public/product-images/b44fe304-a17d-41be-8481-d2e168defb77/mvp/1794419713146-p7dhx2.webp" alt="Grazy Estética" loading="lazy">
+      <img src="https://i.ibb.co/5xSQbz6f/Captura-de-tela-2026-11-11-191056.png" alt="Grazy Estética" loading="lazy">
     </div>
   </div>
 </section>
@@ -502,7 +502,7 @@
       </div>
     </div>
 
-    <div class="lac-ticket rv">
+    <div id="agendar" class="lac-ticket rv">
       <div class="lac-stub">
         <p class="lac-kicker">Cartão de horário</p>
         <h2>Marque o seu horário</h2>
@@ -529,16 +529,17 @@
           <input type="text" name="nome" aria-label="Nome" autocomplete="name" required>
         </label>
         <label>
+          <span>Categoria</span>
+          <select name="categoria" id="selectCategoria" aria-label="Categoria">
+            <option value="">Selecione uma categoria</option>
+            <option value="tratamentos">Tratamentos</option>
+            <option value="treinamentos">Treinamentos</option>
+          </select>
+        </label>
+        <label>
           <span>Serviço</span>
-          <select name="servico" aria-label="Serviço">
-            <option>Limpeza de pele profunda</option>
-            <option>Peeling de diamante</option>
-            <option>Hidratação facial</option>
-            <option>Drenagem linfática</option>
-            <option>Massagem relaxante</option>
-            <option>Design de sobrancelha</option>
-            <option>Avaliação de pele</option>
-            <option>Cursos Profissionais</option>
+          <select name="servico" id="selectServico" aria-label="Serviço">
+            <option value="">Selecione primeiro a categoria</option>
           </select>
         </label>
         <label>
@@ -572,23 +573,25 @@
 <script>
 (function () {
   const servicos = [
-    { id: "f1", nome: "Limpeza de pele profunda", desc: "1 h 30 min. Extração, peeling leve e máscara calmante.", preco: 180, cat: "Facial", foto: "https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=900&q=80" },
-    { id: "f2", nome: "Peeling de diamante", desc: "50 min. Renova a pele e suaviza manchas e poros.", preco: 160, cat: "Facial", foto: "https://images.unsplash.com/photo-1713085085470-fba013d67e65?auto=format&fit=crop&w=900&q=80" },
-    { id: "f3", nome: "Hidratação facial", desc: "45 min. Para pele desidratada ou depois do sol.", preco: 130, cat: "Facial", foto: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=900&q=80" },
-    { id: "c1", nome: "Drenagem linfática", desc: "1 h. Reduz inchaço e melhora a circulação.", preco: 140, cat: "Corporal", foto: "https://images.unsplash.com/photo-1643684391140-c5056cfd3436?auto=format&fit=crop&w=900&q=80" },
-    { id: "c2", nome: "Massagem relaxante", desc: "1 h. Óleos aquecidos e pressão ajustada para você.", preco: 150, cat: "Corporal", foto: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80" },
-    { id: "o1", nome: "Design de sobrancelha", desc: "30 min. Mapeamento do rosto e remoção com pinça.", preco: 50, cat: "Olhar", foto: "https://images.unsplash.com/photo-1761718209835-c8586b7dcac0?auto=format&fit=crop&w=900&q=80" },
-    { id: "a1", nome: "Avaliação de pele", desc: "30 min. Conversa e análise para montar o seu plano de cuidados.", preco: 0, cat: "Avaliação", foto: "https://rblmnlycyjzoxdmhejxd.supabase.co/storage/v1/object/public/product-images/b44fe304-a17d-41be-8481-d2e168defb77/mvp/1794419063377-pipr5n.webp" },
-    { id: "n1", nome: "Cursos Profissionais", desc: "Seja uma profissional na área da estética.", preco: 0, cat: "Novidades", foto: "https://rblmnlycyjzoxdmhejxd.supabase.co/storage/v1/object/public/product-images/b44fe304-a17d-41be-8481-d2e168defb77/mvp/1794420381091-4s5uo1.webp" }
+    { id: "d1", nome: "Depilação corporal feminina", desc: "Depilação com cera quente, suave e eficaz para diferentes áreas do corpo.", preco: 185, cat: "Corporal", foto: "https://i.ibb.co/VcG5dWg0/Captura-de-tela-2026-11-11-184059.png" },
+    { id: "h1", nome: "Hidratação premium", desc: "Hidratação intensa para pele desidratada, com ativos de alto desempenho.", preco: 65.9, cat: "Facial", foto: "https://i.ibb.co/F4Kx2fW4/Captura-de-tela-2026-11-11-184108.png" },
+    { id: "v1", nome: "Ventosa terapia", desc: "Técnica que melhora a circulação, alivia tensões e modela o corpo.", preco: 120, cat: "Corporal", foto: "https://i.ibb.co/GQZcjVBk/Captura-de-tela-2026-11-11-184042.png" },
+    { id: "m1", nome: "Massagem Feminina Drenagem e Modeladora", desc: "Combina drenagem linfática e manobras modeladoras para corpo.", preco: 75, cat: "Corporal", foto: "https://i.ibb.co/TDp12ctJ/Captura-de-tela-2026-11-11-183745.png" },
+    { id: "m2", nome: "Massagem Relaxante Masculina", desc: "Relaxamento profundo com técnicas adaptadas para o homem.", preco: 95, cat: "Corporal", foto: "https://i.ibb.co/C3JbDH2x/Captura-de-tela-2026-11-11-183733.png" },
+    { id: "e1", nome: "Esmaltação em gel Manicure e pedicure", desc: "Manicure e pedicure com esmaltação em gel de longa duração.", preco: 90, cat: "Unhas", foto: "https://i.ibb.co/3YsDsh5z/Captura-de-tela-2026-11-11-183723.png" },
+    { id: "l1", nome: "Spa dos lábios", desc: "Hidratação e renovação dos lábios com massagem e esfoliação.", preco: 55, cat: "Facial", foto: "https://i.ibb.co/hJXjc1Y0/Captura-de-tela-2026-11-11-190032.png" },
+    { id: "k1", nome: "Cronograma capilar", desc: "Reconstrução, hidratação e nutrição para cabelos saudáveis.", preco: 250, cat: "Cabelo", foto: "https://i.ibb.co/rG6H9Htk/Captura-de-tela-2026-11-11-183659.png" },
+    { id: "s1", nome: "Salão completo", desc: "Serviços completos de beleza em um só atendimento.", preco: 75, cat: "Cabelo", foto: "https://i.ibb.co/KjcF4jq2/Captura-de-tela-2026-11-11-183647.png" },
+    { id: "b1", nome: "Bronzeamento Artificial e Natural", desc: "Bronzeamento perfeito e uniforme, artificial ou natural.", preco: 125, cat: "Corporal", foto: "https://i.ibb.co/Vc6SvqYC/Captura-de-tela-2026-11-11-183631.png" },
+    { id: "p1", nome: "Spa dos pés", desc: "Cuidado completo para os pés: higienização, hidratação e massagem.", preco: 500, cat: "Corporal", foto: "https://i.ibb.co/Xk4NkNQ9/Captura-de-tela-2026-11-11-181120.png" },
+    { id: "o1", nome: "Design de sobrancelhas e Epilação de buço", desc: "Design de sobrancelhas e epilação de buço com acabamento perfeito.", preco: 480, cat: "Olhar", foto: "https://i.ibb.co/Cp71dPBX/Captura-de-tela-2026-11-11-183604.png" }
   ];
 
   const treinos = [
-    { nome: "Formação em Estética Avançada", carga: "40 horas", duracao: "4 semanas", preco: "R$ 1.200,00", desc: "Técnicas de limpeza de pele, avaliação e protocolos para diferentes tipos de pele.", foto: "https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=900&q=80" },
-    { nome: "Curso de Extensão de Cílios", carga: "16 horas", duracao: "2 dias", preco: "R$ 800,00", desc: "Fio a fio e volume russo, com prática supervisionada em modelo real.", foto: "https://images.unsplash.com/photo-1713085085470-fba013d67e65?auto=format&fit=crop&w=900&q=80" },
-    { nome: "Design de Sobrancelha Profissional", carga: "8 horas", duracao: "1 dia", preco: "R$ 450,00", desc: "Mapeamento facial, visagismo e técnicas de brow lamination.", foto: "https://images.unsplash.com/photo-1761718209835-c8586b7dcac0?auto=format&fit=crop&w=900&q=80" },
-    { nome: "Drenagem Linfática Manual", carga: "20 horas", duracao: "2 semanas", preco: "R$ 900,00", desc: "Teoria e prática de manobras para redução de inchaço e melhora da circulação.", foto: "https://images.unsplash.com/photo-1643684391140-c5056cfd3436?auto=format&fit=crop&w=900&q=80" },
-    { nome: "Massagem Relaxante Completa", carga: "12 horas", duracao: "2 dias", preco: "R$ 600,00", desc: "Protocolo completo com óleos aquecidos e adaptação de pressão.", foto: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80" },
-    { nome: "Curso de Brigthening e Clareamento", carga: "8 horas", duracao: "1 dia", preco: "R$ 500,00", desc: "Técnicas de clareamento seguro para diferentes tipos de pele.", foto: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=900&q=80" }
+    { nome: "Curso esmaltação em gel", carga: "16 horas", duracao: "2 dias", preco: "R$ 500,00", desc: "Aprenda a técnica completa de esmaltação em gel, do preparo ao acabamento.", foto: "https://i.ibb.co/FbSWPzph/Captura-de-tela-2026-11-11-184050.png" },
+    { nome: "Curso Soft gel e esmaltação em gel", carga: "24 horas", duracao: "3 dias", preco: "R$ 800,00", desc: "Especialize-se em soft gel e esmaltação em gel com prática em modelo real.", foto: "https://i.ibb.co/7xcF2LsQ/Captura-de-tela-2026-11-11-183538.png" },
+    { nome: "Curso de manicure e pedicure", carga: "20 horas", duracao: "2 dias", preco: "R$ 750,00", desc: "Curso completo de manicure e pedicure, com todas as técnicas essenciais.", foto: "https://i.ibb.co/jkMMg6cx/Captura-de-tela-2026-11-11-183519.png" },
+    { nome: "Cabeleireiro completo incluindo química", carga: "", duracao: "", preco: "R$ 1.250,00", desc: "Curso completo de cabeleireiro incluindo procedimentos com química.", foto: "https://i.ibb.co/YTYCHv6Z/Captura-de-tela-2026-11-11-183551.png" }
   ];
 
   const grid = document.getElementById("gridServicos");
@@ -728,6 +731,51 @@
     btn.addEventListener("keydown", e => {
       if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); setFaq((i + 1) % faqBtns.length, true); }
       if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); setFaq((i - 1 + faqBtns.length) % faqBtns.length, true); }
+    });
+  });
+
+  const itensPorCategoria = {
+    tratamentos: [
+      "Depilação corporal feminina",
+      "Hidratação premium",
+      "Ventosa terapia",
+      "Massagem Feminina Drenagem e Modeladora",
+      "Massagem Relaxante Masculina",
+      "Esmaltação em gel Manicure e pedicure",
+      "Spa dos lábios",
+      "Cronograma capilar",
+      "Salão completo",
+      "Bronzeamento Artificial e Natural",
+      "Spa dos pés",
+      "Design de sobrancelhas e Epilação de buço"
+    ],
+    treinamentos: [
+      "Curso esmaltação em gel",
+      "Curso Soft gel e esmaltação em gel",
+      "Curso de manicure e pedicure",
+      "Cabeleireiro completo incluindo química"
+    ]
+  };
+
+  const selectCategoria = document.getElementById("selectCategoria");
+  const selectServico = document.getElementById("selectServico");
+
+  selectCategoria.addEventListener("change", () => {
+    const cat = selectCategoria.value;
+    selectServico.innerHTML = "";
+    if (!cat) {
+      selectServico.innerHTML = '<option value="">Selecione primeiro a categoria</option>';
+      return;
+    }
+    const opcaoPadrao = document.createElement("option");
+    opcaoPadrao.value = "";
+    opcaoPadrao.textContent = "Selecione um serviço";
+    selectServico.appendChild(opcaoPadrao);
+    itensPorCategoria[cat].forEach(item => {
+      const opt = document.createElement("option");
+      opt.value = item;
+      opt.textContent = item;
+      selectServico.appendChild(opt);
     });
   });
 
